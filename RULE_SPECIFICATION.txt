@@ -1,0 +1,148 @@
+
+================================================================================
+TEST DATA GENERATION TOOL - RULE SPECIFICATION
+================================================================================
+
+RULE FORMAT SYNTAX:
+------------------
+Rules follow this format: parameter1:value1; parameter2:value2; parameter3:value3
+
+Parameters are separated by semicolons (;)
+Parameter names and values are separated by colons (:)
+
+
+SUPPORTED DATA TYPES:
+--------------------
+
+1. INTEGER
+   Syntax: type:integer; range:min-max; unique:true/false
+   Example: type:integer; range:1000-9999; unique:true
+   Parameters:
+   - range: min-max values (required)
+   - unique: true/false (optional, default: false)
+
+2. DECIMAL/FLOAT
+   Syntax: type:decimal; range:min-max; precision:n
+   Example: type:decimal; range:45000-150000; precision:2
+   Parameters:
+   - range: min-max values (required)
+   - precision: number of decimal places (optional, default: 2)
+
+3. STRING (with pattern)
+   Syntax: type:string; pattern:PATTERN; unique:true/false
+   Example: type:string; pattern:ACC-#####; unique:true
+   Pattern symbols:
+   - # = random digit (0-9)
+   - @ = random uppercase letter (A-Z)
+   - ? = random lowercase letter (a-z)
+   - * = random alphanumeric character
+   Parameters:
+   - pattern: string pattern (required)
+   - unique: true/false (optional, default: false)
+
+4. FIRST NAME
+   Syntax: type:first_name
+   Example: type:first_name
+   Generates realistic first names
+
+5. LAST NAME
+   Syntax: type:last_name
+   Example: type:last_name
+   Generates realistic last names
+
+6. EMAIL
+   Syntax: type:email; domain:DOMAIN
+   Example: type:email; domain:company.com
+   Parameters:
+   - domain: email domain (optional, default: example.com)
+
+7. PHONE
+   Syntax: type:phone; format:FORMAT
+   Example: type:phone; format:###-###-####
+   Parameters:
+   - format: phone format using # for digits (optional, default: ###-###-####)
+
+8. DATE
+   Syntax: type:date; start:YYYY-MM-DD; end:YYYY-MM-DD; format:FORMAT
+   Example: type:date; start:2020-01-01; end:2024-12-31; format:%Y-%m-%d
+   Parameters:
+   - start: start date (required)
+   - end: end date (required)
+   - format: date format (optional, default: %Y-%m-%d)
+
+9. DATETIME
+   Syntax: type:datetime; start:YYYY-MM-DD; end:YYYY-MM-DD; format:FORMAT
+   Example: type:datetime; start:2024-01-01; end:2024-12-31; format:%Y-%m-%d %H:%M:%S
+   Parameters:
+   - start: start date (required)
+   - end: end date (required)
+   - format: datetime format (optional, default: %Y-%m-%d %H:%M:%S)
+
+10. BOOLEAN
+    Syntax: type:boolean
+    Example: type:boolean
+    Generates True/False values
+
+11. CHOICE (from list)
+    Syntax: type:choice; values:VAL1,VAL2,VAL3
+    Example: type:choice; values:HR,Finance,IT,Sales,Operations
+    Parameters:
+    - values: comma-separated list of choices (required)
+
+12. ADDRESS
+    Syntax: type:address
+    Example: type:address
+    Generates realistic street addresses
+
+13. POSTAL CODE
+    Syntax: type:postal_code; country:CODE
+    Example: type:postal_code; country:CA
+    Parameters:
+    - country: country code (US, CA, UK, etc.) (optional, default: US)
+
+14. TEXT (sentences/words)
+    Syntax: type:text; words:min-max
+    Example: type:text; words:5-15
+    Parameters:
+    - words: range of words to generate (optional, default: 5-10)
+
+
+DATE FORMAT CODES:
+------------------
+%Y - 4-digit year (2024)
+%y - 2-digit year (24)
+%m - Month as number (01-12)
+%d - Day of month (01-31)
+%H - Hour 24-hour (00-23)
+%I - Hour 12-hour (01-12)
+%M - Minute (00-59)
+%S - Second (00-59)
+%p - AM/PM
+
+
+SPECIAL FIRST ROW:
+------------------
+The first row must contain:
+Column Name: "Number of data rows"
+Rule: The number of rows to generate (e.g., "100")
+
+
+EXAMPLES:
+---------
+Column Name: customer_id
+Rule: type:integer; range:10000-99999; unique:true
+
+Column Name: full_name
+Rule: type:first_name
+
+Column Name: registration_date
+Rule: type:date; start:2020-01-01; end:2024-12-31; format:%Y-%m-%d
+
+Column Name: price
+Rule: type:decimal; range:9.99-999.99; precision:2
+
+Column Name: status
+Rule: type:choice; values:Active,Inactive,Pending,Suspended
+
+Column Name: license_plate
+Rule: type:string; pattern:@@@@-###; unique:true
